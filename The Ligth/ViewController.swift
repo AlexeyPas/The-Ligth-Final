@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     override var prefersStatusBarHidden: Bool{
         return true
     }
-    var isLightOn = true
+    var isLightOn = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateWindow()
@@ -21,11 +22,19 @@ class ViewController: UIViewController {
 
     fileprivate func updateWindow() {
         view.backgroundColor = isLightOn ? .white : .black
+        label.text = isLightOn ? "Выключить" : "Включить"
+        label.textAlignment = .center
+        label.textColor = isLightOn ? .black : .white
+        
     }
+    
+    
+    @IBOutlet weak var label: UILabel!
     
     @IBAction func buttonPressed() {
         isLightOn.toggle()
         updateWindow()
+        
         let device = AVCaptureDevice.default(for: AVMediaType.video)
         
         if ((device?.hasTorch) != nil){
