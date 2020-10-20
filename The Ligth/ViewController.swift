@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
 
@@ -25,6 +26,17 @@ class ViewController: UIViewController {
     @IBAction func buttonPressed() {
         isLightOn.toggle()
         updateWindow()
+        let device = AVCaptureDevice.default(for: AVMediaType.video)
+        
+        if ((device?.hasTorch) != nil){
+            do{
+                try device?.lockForConfiguration()
+                device?.torchMode = isLightOn ? .on : .off
+                device?.unlockForConfiguration()
+            }catch {
+                print(error)
+            }
+        }
     }
     
 }
